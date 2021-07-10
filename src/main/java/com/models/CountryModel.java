@@ -1,13 +1,11 @@
 package com.models;
 
-import java.util.List;
-
-public class Country {
+public class CountryModel {
 
     private String name;
-    private List<String> borders;
+    private String[] borders;
 
-    public Country(String name, List<String> borders) {
+    public CountryModel(String name, String[] borders) {
         this.name = name;
         this.borders = borders;
     }
@@ -20,11 +18,11 @@ public class Country {
         this.name = name;
     }
 
-    public List<String> getBorders() {
+    public String[] getBorders() {
         return borders;
     }
 
-    public void setBorders(List<String> borders) {
+    public void setBorders(String[] borders) {
         this.borders = borders;
     }
 }
