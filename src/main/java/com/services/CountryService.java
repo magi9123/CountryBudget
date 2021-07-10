@@ -1,9 +1,8 @@
 package com.services;
 
-import com.models.CountryModel;
-
 import java.io.IOException;
+import java.util.List;
 
 public interface CountryService {
-    CountryModel[] getAllCountries() throws IOException, InterruptedException;
+    List<Object> getAllCountries() throws IOException, InterruptedException;
 }

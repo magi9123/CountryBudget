@@ -1,7 +1,6 @@
 package com.services.impl;
 
-import com.google.gson.Gson;
-import com.models.CountryModel;
+import com.google.gson.GsonBuilder;
 import com.services.CountryService;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +9,13 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class CountryServiceImpl implements CountryService {
     @Override
-    public CountryModel[] getAllCountries() throws IOException, InterruptedException {
+    public List<Object> getAllCountries() throws IOException, InterruptedException {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://restcountries.eu/rest/v2/all?fields=name;borders"))
@@ -24,9 +25,8 @@ public class CountryServiceImpl implements CountryService {
                 .build();
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 
-        Gson gson = new Gson();
-        CountryModel[] countries = gson.fromJson(response.body(), CountryModel[].class);
+        List<Object> list = Arrays.asList(new GsonBuilder().create().fromJson(response.body(), Object[].class));
 
-        return countries;
+        return list;
     }
 }
