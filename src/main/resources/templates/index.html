@@ -9,7 +9,8 @@
     <h1>The Country Neighbours Tour</h1>
 </div>
 <div align="left">
-    <form th:action="@{/index}" method="GET" th:object="${countries}">
+    <form th:action="@{/index/${countryName}/${money}}" method="post"
+          th:object="${countries}">
         <label>Country:</label>
         <select id="countryName" name="countryName">
             <option value="">select country</option>
@@ -21,13 +22,13 @@
         <br/>
 
         <label>Money for trip:
-            <input type="text" name="money"/>
+            <input type="text" id="money" name="money"/>
         </label>
         <br/>
         <br/>
 
         <label>Note:</label>
-        <!--        <textarea rows="5" cols="25" th:field="*{note}"></textarea>-->
+        <!--       <textarea rows="5" cols="25" th:field="*{note}"></textarea>-->
         <br/>
         <button type="submit">show</button>
     </form>

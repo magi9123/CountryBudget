@@ -25,8 +25,14 @@ public class Country {
         return model;
     }
 
-//    @GetMapping("/{country}")
-//    public void getCountry(@PathVariable(name = "country") String country, @PathVariable(name = "money") int money) {
-//
-//    }
+    @PostMapping("/index/{countryName}/{money}")
+    public void getCountry(@PathVariable(name = "countryName") String country, @PathVariable(name = "money") String money) {
+        System.out.println(country + " " + " ");
+        String countryCheck = "Portugal";
+        int moneyForTrip = 4000; //Integer.parseInt(money);
+
+        String result = countryService.calculateTrip(countryCheck, moneyForTrip);
+
+        //return result;
+    }
 }
