@@ -25,11 +25,13 @@ public class Country {
         return model;
     }
 
-    @GetMapping("/index/{countryName}/{money}")
-    public ModelAndView getCountry(@RequestParam("countryName") String countryName, @RequestParam("money") String money) {
-       int moneyForTrip = Integer.parseInt(money);
+    @GetMapping("/index/{countryName}/{money}/{costCountry}/{currency}")
+    public ModelAndView getCountry(@RequestParam("countryName") String countryName, @RequestParam("money") String money,
+                                   @RequestParam("costCountry") String costCountry, @RequestParam("currency") String currency) {
+        int moneyForTrip = Integer.parseInt(money);
+        int costForCountry = Integer.parseInt(costCountry);
 
-        String result = countryService.calculateTrip(countryName, moneyForTrip);
+        String result = countryService.calculateTrip(countryName, moneyForTrip, costForCountry, currency);
         ModelAndView modelAndView = new ModelAndView("/index");
         modelAndView.addObject("message", result);
         modelAndView.addObject("countries", CountryServiceImpl.getList());

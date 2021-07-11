@@ -15,7 +15,8 @@
         <h1>The Country Neighbours Tour</h1>
     </div>
     <div align="left">
-        <form action="#" th:action="@{index/countryName/money(countryName=${countryName}),(money=${money})}"
+        <form action="#"
+              th:action="@{index/countryName/money/costCountry/currency(countryName=${countryName}),(money=${money}),(costCountry=${costCountry}),(currency=${currency})}"
               th:object="${countries}" method="get">
 
             <div class="form-group">
@@ -37,14 +38,20 @@
             </div>
             <br/>
             <br/>
-            <!--            <div class="form-group">-->
-            <!--                <label> Currency:-->
-            <!--                    <input type="text" id="currency" name="currency"/>-->
-            <!--&lt;!&ndash;                    <input type="hidden" name="currency" th:value="${currency}">&ndash;&gt;-->
-            <!--                </label>-->
-            <!--            </div>-->
-            <!--            <br/>-->
-            <!--            <br/>-->
+            <div class="form-group">
+                <label> Average cost to visit country:
+                    <input type="text" id="costCountry" name="costCountry"/>
+                </label>
+            </div>
+            <br/>
+            <br/>
+            <div class="form-group">
+                <label> Currency:
+                    <input type="text" id="currency" name="currency"/>
+                </label>
+            </div>
+            <br/>
+            <br/>
             <div class="form-group">
                 <label>Trip info:</label>
                 <p th:text="${message}"></p>

@@ -6,5 +6,5 @@ import java.util.List;
 public interface CountryService {
     List<? extends Object> getAllCountries() throws IOException, InterruptedException;
 
-    String calculateTrip(String country, int money);
+    String calculateTrip(String country, int money, int costCountry, String currency);
 }

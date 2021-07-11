@@ -34,7 +34,7 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public String calculateTrip(String country, int money) {
+    public String calculateTrip(String country, int money, int costCountry, String currency) {
         country = checkForJunckSymbol(country);
         StringBuilder result = new StringBuilder();
         result.append(country).append(" has ");
@@ -52,12 +52,12 @@ public class CountryServiceImpl implements CountryService {
                             result.append(countNeighbor).append(" neighbor countries ")
                                     .append(entry.getValue() + "").append(" ");
 
-                            int countTrip = money / (countNeighbor * 100);
-                            int remainder = money % (countNeighbor * 100);
+                            int countTrip = money / (countNeighbor * costCountry);
+                            int remainder = money % (countNeighbor * costCountry);
                             result.append(" and Angel can travel around them ").append(countTrip).append(" times. ");
 
                             if (remainder != 0) {
-                                result.append("He will have ").append(remainder).append(" EUR leftover.");
+                                result.append("He will have ").append(remainder + " ").append(currency.toUpperCase()).append(" leftover.");
                             }
                         } else {
                             result.append("'The Country Neighbours Tour' is not possible.");
