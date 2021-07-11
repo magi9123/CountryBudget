@@ -1,37 +1,59 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="ISO-8859-1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>The Country Neighbours Tour</title>
 </head>
 <body>
-<div align="center">
-    <h1>The Country Neighbours Tour</h1>
-</div>
-<div align="left">
-    <form th:action="@{/index/${countryName}/${money}}" method="post"
-          th:object="${countries}">
-        <label>Country:</label>
-        <select id="countryName" name="countryName">
-            <option value="">select country</option>
-            <option th:each="test : ${countries}"
-                    th:value="${test.name}"
-                    th:text="${test.name}"></option>
-        </select>
-        <br/>
-        <br/>
+<div class="container">
+    <div align="center">
+        <h1>The Country Neighbours Tour</h1>
+    </div>
+    <div align="left">
+        <form action="#" th:action="@{'/index/{countryName}/{money}'(countryName=${countryName}, money=${money})}"
+              th:object="${countries}"
+              method="get">
 
-        <label>Money for trip:
-            <input type="text" id="money" name="money"/>
-        </label>
-        <br/>
-        <br/>
+            <div class="form-group">
+                <label>Country:</label>
+                <select th:id="countryName" th:name="countryName">
+                    <option value="">select country</option>
+                    <option th:each="country : ${countries}"
+                            th:value="${country.name}"
+                            th:text="${country.name}"></option>
+                </select>
+            </div>
+            <br/>
+            <br/>
 
-        <label>Note:</label>
-        <!--       <textarea rows="5" cols="25" th:field="*{note}"></textarea>-->
-        <br/>
-        <button type="submit">show</button>
-    </form>
+            <div class="form-group">
+                <label> Total budget:
+                    <input th:type="text" th:id="money" th:name="money"/>
+                </label>
+            </div>
+            <br/>
+            <br/>
+            <!--            <div class="form-group">-->
+            <!--                <label> Currency:-->
+            <!--                    <input type="text" id="currency" name="currency"/>-->
+            <!--&lt;!&ndash;                    <input type="hidden" name="currency" th:value="${currency}">&ndash;&gt;-->
+            <!--                </label>-->
+            <!--            </div>-->
+            <!--            <br/>-->
+            <!--            <br/>-->
+            <div class="form-group">
+                <label>Trip info:</label>
+                <p th:text="${message}"></p>
+            </div>
+            <br/>
+            <button type="submit" class="btn btn-info">SHOW</button>
+        </form>
+    </div>
 </div>
 </body>
 </html>

@@ -25,11 +25,10 @@ public class Country {
         return model;
     }
 
-    @PostMapping("/index/{countryName}/{money}")
-    public ModelAndView getCountry(@PathVariable(name = "countryName") String country, @PathVariable(name = "money") String money) {
-        System.out.println(country + " " + " ");
-        String countryCheck = "Andorra";
-        int moneyForTrip = 4000; //Integer.parseInt(money);
+    @GetMapping("/index/{countryName}/{money}")
+    public ModelAndView getCountry(@PathVariable("countryName") String countryName, @PathVariable("money") String money) {
+        String countryCheck = countryName.split("=")[1];
+        int moneyForTrip = Integer.parseInt(money.split("=")[1]);
 
         String result = countryService.calculateTrip(countryCheck, moneyForTrip);
         ModelAndView modelAndView = new ModelAndView("/index");

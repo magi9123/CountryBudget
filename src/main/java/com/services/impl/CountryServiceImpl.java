@@ -35,10 +35,12 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public String calculateTrip(String country, int money) {
+        country = checkForJunckSymbol(country);
         StringBuilder result = new StringBuilder();
         result.append(country).append(" has ");
 
-        for (int i = 0; i < list.size(); i++) {
+        boolean findMatch = false;
+        for (int i = 0; i < list.size() && !findMatch; i++) {
             LinkedTreeMap<String, String[]> countryModel = (LinkedTreeMap<String, String[]>) list.get(i);
             if (countryModel.containsValue(country)) {
 
@@ -58,15 +60,20 @@ public class CountryServiceImpl implements CountryService {
                                 result.append("He will have ").append(remainder).append(" EUR leftover.");
                             }
                         } else {
-                            result.append("'The Country Neighbours Tour' is not possible");
+                            result.append("'The Country Neighbours Tour' is not possible.");
                         }
 
+                        findMatch = true;
                         break;
                     }
                 }
             }
         }
         return result.toString();
+    }
+
+    private String checkForJunckSymbol(String country) {
+        return country = country.replace("+", " ");
     }
 
     private int getNumberOfBorders(Map.Entry<String, String[]> entry) {
