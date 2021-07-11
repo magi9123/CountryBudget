@@ -16,7 +16,7 @@ public class Country {
     @Autowired
     CountryService countryService;
 
-    @GetMapping("/index")
+    @RequestMapping("/index")
     public Model getCountries(Model model) throws IOException, InterruptedException {
 
         List<? extends Object> countries = countryService.getAllCountries();
@@ -26,11 +26,10 @@ public class Country {
     }
 
     @GetMapping("/index/{countryName}/{money}")
-    public ModelAndView getCountry(@PathVariable("countryName") String countryName, @PathVariable("money") String money) {
-        String countryCheck = countryName.split("=")[1];
-        int moneyForTrip = Integer.parseInt(money.split("=")[1]);
+    public ModelAndView getCountry(@RequestParam("countryName") String countryName, @RequestParam("money") String money) {
+       int moneyForTrip = Integer.parseInt(money);
 
-        String result = countryService.calculateTrip(countryCheck, moneyForTrip);
+        String result = countryService.calculateTrip(countryName, moneyForTrip);
         ModelAndView modelAndView = new ModelAndView("/index");
         modelAndView.addObject("message", result);
         modelAndView.addObject("countries", CountryServiceImpl.getList());

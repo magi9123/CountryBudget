@@ -15,9 +15,8 @@
         <h1>The Country Neighbours Tour</h1>
     </div>
     <div align="left">
-        <form action="#" th:action="@{'/index/{countryName}/{money}'(countryName=${countryName}, money=${money})}"
-              th:object="${countries}"
-              method="get">
+        <form action="#" th:action="@{index/countryName/money(countryName=${countryName}),(money=${money})}"
+              th:object="${countries}" method="get">
 
             <div class="form-group">
                 <label>Country:</label>
