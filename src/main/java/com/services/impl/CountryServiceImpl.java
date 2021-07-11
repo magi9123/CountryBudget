@@ -47,11 +47,12 @@ public class CountryServiceImpl implements CountryService {
                         int countNeighbor = getNumberOfBorders(entry);
 
                         if (countNeighbor != 0) {
-                            result.append(countNeighbor).append(" ").append(entry.getValue() + "").append(" ");
+                            result.append(countNeighbor).append(" neighbor countries ")
+                                    .append(entry.getValue() + "").append(" ");
 
                             int countTrip = money / (countNeighbor * 100);
                             int remainder = money % (countNeighbor * 100);
-                            result.append(") and Angel can travel around them ").append(countTrip).append(" times. ");
+                            result.append(" and Angel can travel around them ").append(countTrip).append(" times. ");
 
                             if (remainder != 0) {
                                 result.append("He will have ").append(remainder).append(" EUR leftover.");
