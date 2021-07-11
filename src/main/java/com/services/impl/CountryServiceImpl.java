@@ -1,7 +1,7 @@
 package com.services.impl;
 
 import com.google.gson.GsonBuilder;
-import com.models.CountryModel;
+import com.google.gson.internal.LinkedTreeMap;
 import com.services.CountryService;
 import org.springframework.stereotype.Service;
 
@@ -10,17 +10,15 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class CountryServiceImpl implements CountryService {
 
-    private static List<Object> list = new LinkedList<>();
+    private static List<? extends Object> list = new LinkedList<>();
 
     @Override
-    public List<Object> getAllCountries() throws IOException, InterruptedException {
+    public List<? extends Object> getAllCountries() throws IOException, InterruptedException {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://restcountries.eu/rest/v2/all?fields=name;borders"))
@@ -41,26 +39,42 @@ public class CountryServiceImpl implements CountryService {
         result.append(country).append(" has ");
 
         for (int i = 0; i < list.size(); i++) {
-            CountryModel countryModel = (CountryModel) list.get(i);
-            if (countryModel.getName().equals(country)) {
+            LinkedTreeMap<String, String[]> countryModel = (LinkedTreeMap<String, String[]>) list.get(i);
+            if (countryModel.containsValue(country)) {
 
-                result.append(countryModel.getBorders().length)
-                        .append(" neighbor countries (");
-                for (String c : countryModel.getBorders()) {
-                    result.append(c).append(" ");
+                for (Map.Entry<String, String[]> entry : countryModel.entrySet()) {
+                    if (entry.getKey().equals("borders")) {
+                        int countNeighbor = getNumberOfBorders(entry);
+
+                        if (countNeighbor != 0) {
+                            result.append(countNeighbor).append(" ").append(entry.getValue() + "").append(" ");
+
+                            int countTrip = money / (countNeighbor * 100);
+                            int remainder = money % (countNeighbor * 100);
+                            result.append(") and Angel can travel around them ").append(countTrip).append(" times. ");
+
+                            if (remainder != 0) {
+                                result.append("He will have ").append(remainder).append(" EUR leftover.");
+                            }
+                        } else {
+                            result.append("'The Country Neighbours Tour' is not possible");
+                        }
+
+                        break;
+                    }
                 }
-
-                int countTrip = money / countryModel.getBorders().length;
-                int remainder = money % countryModel.getBorders().length;
-                result.append(") and Angel can travel around them ").append(countTrip).append(" times");
-
-                result.append("He will have ").append(remainder).append(" EUR leftover");
-
             }
         }
-        //Bulgaria has 5 neighbor countries (TR, GR, MK, SR, RO)
-        // and Angel can travel around them 2 times. He will have 200 EUR leftover.
-
         return result.toString();
     }
+
+    private int getNumberOfBorders(Map.Entry<String, String[]> entry) {
+        String[] countNeighbor = (entry.getValue() + "").split(",");
+        return countNeighbor.length;
+    }
+
+    public static List<? extends Object> getList() {
+        return list;
+    }
+
 }
