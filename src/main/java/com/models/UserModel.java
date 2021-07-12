@@ -11,6 +11,8 @@ public class UserModel {
     @Enumerated(EnumType.STRING)
     private Provider provider;
 
+    private String name;
+
     public UserModel(Provider provider) {
         this.provider = provider;
     }
@@ -21,5 +23,13 @@ public class UserModel {
 
     public void setProvider(Provider provider) {
         this.provider = provider;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
