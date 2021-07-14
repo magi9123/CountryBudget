@@ -1,12 +1,15 @@
 package com.controller;
 
+import com.models.CountryFormModel;
 import com.services.CountryService;
 import com.services.impl.CountryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -25,16 +28,17 @@ public class Country {
         return model;
     }
 
-    @GetMapping("/index/{countryName}/{money}/{costCountry}/{currency}")
-    public ModelAndView getCountry(@RequestParam("countryName") String countryName, @RequestParam("money") String money,
-                                   @RequestParam("costCountry") String costCountry, @RequestParam("currency") String currency) {
-        int moneyForTrip = Integer.parseInt(money);
-        int costForCountry = Integer.parseInt(costCountry);
-
-        String result = countryService.calculateTrip(countryName, moneyForTrip, costForCountry, currency);
+    @PostMapping("/index")
+    public ModelAndView getCountry(@Valid CountryFormModel countryFormModel, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView("/index");
-        modelAndView.addObject("message", result);
-        modelAndView.addObject("countries", CountryServiceImpl.getList());
+
+        if (bindingResult.hasErrors()) {
+            return modelAndView;
+        } else {
+             String result = countryService.calculateTrip(countryFormModel);
+            //  modelAndView.addObject("message", result);
+            modelAndView.addObject("countries", CountryServiceImpl.getList());
+        }
 
         return modelAndView;
     }

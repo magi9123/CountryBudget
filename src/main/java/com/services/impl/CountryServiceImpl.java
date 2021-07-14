@@ -2,6 +2,7 @@ package com.services.impl;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.LinkedTreeMap;
+import com.models.CountryFormModel;
 import com.services.CountryService;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +35,8 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public String calculateTrip(String country, int money, int costCountry, String currency) {
-        country = checkForJunckSymbol(country);
+    public String calculateTrip(CountryFormModel countryFormModel) {
+        String country = checkForJunckSymbol(countryFormModel.getCountyrName());
         StringBuilder result = new StringBuilder();
         result.append(country).append(" has ");
 
@@ -52,12 +53,12 @@ public class CountryServiceImpl implements CountryService {
                             result.append(countNeighbor).append(" neighbor countries ")
                                     .append(entry.getValue() + "").append(" ");
 
-                            int countTrip = money / (countNeighbor * costCountry);
-                            int remainder = money % (countNeighbor * costCountry);
+                            int countTrip = countryFormModel.getMoney() / (countNeighbor * countryFormModel.getCostCountry());
+                            int remainder = countryFormModel.getMoney() % (countNeighbor * countryFormModel.getCostCountry());
                             result.append(" and Angel can travel around them ").append(countTrip).append(" times. ");
 
                             if (remainder != 0) {
-                                result.append("He will have ").append(remainder + " ").append(currency.toUpperCase()).append(" leftover.");
+                                result.append("He will have ").append(remainder + " ").append(countryFormModel.getCurrency().toUpperCase()).append(" leftover.");
                             }
                         } else {
                             result.append("'The Country Neighbours Tour' is not possible.");

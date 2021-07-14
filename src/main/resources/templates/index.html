@@ -15,11 +15,8 @@
         <h1>The Country Neighbours Tour</h1>
     </div>
     <div align="left">
-        <form action="#"
-              th:action="@{index/countryName/money/costCountry/currency(countryName=${countryName}),(money=${money}),(costCountry=${costCountry}),(currency=${currency})}"
-              th:object="${countries}" method="get">
-
-            <div class="form-group">
+        <form action="#" th:action="@{/index}" th:object="${formInfo}" method="post">
+            <div class="form-group" th:object="${countries}">
                 <label>Country:</label>
                 <select th:id="countryName" th:name="countryName">
                     <option value="">select country</option>
@@ -27,6 +24,7 @@
                             th:value="${country.name}"
                             th:text="${country.name}"></option>
                 </select>
+                <!--                <i th:if="${#fields.hasErrors('countryName')}" class="small" th:errorclass="fieldError"></i>-->
             </div>
             <br/>
             <br/>
@@ -35,6 +33,7 @@
                 <label> Total budget:
                     <input th:type="text" th:id="money" th:name="money"/>
                 </label>
+                <!--                <i th:if="${#fields.hasErrors('money')}" class="small" th:errorclass="fieldError"></i>-->
             </div>
             <br/>
             <br/>
@@ -42,6 +41,7 @@
                 <label> Average cost to visit country:
                     <input type="text" id="costCountry" name="costCountry"/>
                 </label>
+                <!--                <i th:if="${#fields.hasErrors('costCountry')}" class="small" th:errorclass="fieldError"></i>-->
             </div>
             <br/>
             <br/>
@@ -49,6 +49,7 @@
                 <label> Currency:
                     <input type="text" id="currency" name="currency"/>
                 </label>
+                <!--                <i th:if="${#fields.hasErrors('currency')}" class="small" th:errorclass="fieldError"></i>-->
             </div>
             <br/>
             <br/>
