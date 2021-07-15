@@ -24,20 +24,19 @@ public class Country {
 
         List<? extends Object> countries = countryService.getAllCountries();
         model.addAttribute("countries", countries);
-
+        model.addAttribute("formInfo", new CountryFormModel());
         return model;
     }
 
     @PostMapping("/index")
-    public ModelAndView getCountry(@Valid CountryFormModel countryFormModel, BindingResult bindingResult) {
+    public ModelAndView getCountry(@Valid @ModelAttribute("formInfo") CountryFormModel countryFormModel, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView("/index");
+        modelAndView.addObject("countries", CountryServiceImpl.getList());
+        modelAndView.addObject("formInfo", countryFormModel);
 
-        if (bindingResult.hasErrors()) {
-            return modelAndView;
-        } else {
-             String result = countryService.calculateTrip(countryFormModel);
-            //  modelAndView.addObject("message", result);
-            modelAndView.addObject("countries", CountryServiceImpl.getList());
+        if (!bindingResult.hasErrors()) {
+            String result = countryService.calculateTrip(countryFormModel);
+            modelAndView.addObject("message", result);
         }
 
         return modelAndView;

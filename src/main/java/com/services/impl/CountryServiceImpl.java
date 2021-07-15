@@ -36,7 +36,7 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public String calculateTrip(CountryFormModel countryFormModel) {
-        String country = checkForJunckSymbol(countryFormModel.getCountyrName());
+        String country = checkForJunckSymbol(countryFormModel.getCountryName());
         StringBuilder result = new StringBuilder();
         result.append(country).append(" has ");
 
